@@ -1,10 +1,23 @@
+import io.qameta.allure.gradle.AllureExtension
+import io.qameta.allure.gradle.AllurePlugin
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.script.lang.kotlin.*
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("io.qameta.allure:allure-gradle:2.3")
+    }
+}
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.1.2"
 }
+
+apply<AllurePlugin>()
 
 repositories {
     jcenter()
@@ -28,3 +41,8 @@ test.testLogging {
 }
 
 test.useTestNG()
+
+val allure: AllureExtension by extensions
+allure.autoconfigure = true
+allure.version = "2.1.1"
+allure.configuration = "compile"

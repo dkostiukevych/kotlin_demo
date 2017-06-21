@@ -1,6 +1,7 @@
 package pages
 
 import com.codeborne.selenide.Selenide
+import io.qameta.allure.Step
 import selenide.Selenide.Companion.s
 import test.User
 
@@ -13,12 +14,12 @@ class LoginPage : Page() {
     val password = s("#inputPassword3")
     val loginBtn = s("#parent > form > div:nth-child(3) > div > button")
 
-    fun open(): LoginPage {
+    @Step fun open(): LoginPage {
         Selenide.open("/")
         return this
     }
 
-    fun loginAs(user: User): MainPage {
+    @Step fun loginAs(user: User): MainPage {
         username.value = user.name
         password.value = user.password
         loginBtn.click()

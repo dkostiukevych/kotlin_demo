@@ -1,28 +1,24 @@
 package pages
 
-import com.codeborne.selenide.Selenide
+import com.automation.remarks.kirk.Page
+import domain.User
 import io.qameta.allure.Step
-import selenide.Selenide.Companion.s
-import test.User
 
 /**
  * Created by sergey on 17.06.17.
  */
 class LoginPage : Page() {
 
-    val username = s("#inputEmail3")
-    val password = s("#inputPassword3")
-    val loginBtn = s("#parent > form > div:nth-child(3) > div > button")
+    override val url: String?
+        get() = "http://localhost:8086"
 
-    @Step fun open(): LoginPage {
-        Selenide.open("/")
-        return this
-    }
+    val username = element("#inputEmail3")
+    val password = element("#inputPassword3")
+    val loginBtn = element("#parent > form > div:nth-child(3) > div > button")
 
-    @Step fun loginAs(user: User): MainPage {
-        username.value = user.name
-        password.value = user.password
+    @Step fun loginAs(user: User) {
+        username.setVal(user.name)
+        password.setVal(user.password)
         loginBtn.click()
-        return MainPage()
     }
 }

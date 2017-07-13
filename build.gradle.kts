@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    compile("com.automation-remarks:kirk:0.5")
+    compile(project(":kirk"))
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.2-4")
     compile("org.testng:testng:6.11")
 }

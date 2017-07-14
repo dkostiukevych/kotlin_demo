@@ -5,6 +5,7 @@ import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.core.drive
+import io.qameta.allure.Step
 import org.openqa.selenium.By
 import org.openqa.selenium.support.ui.Select
 import org.testng.annotations.Test
@@ -21,7 +22,7 @@ class CalculatorTest {
             element("input[ng-model='second']").setValue("2")
             select("select[ng-model='operator']").selectByVisibleText("+")
             element("#gobutton").click()
-            element("h2.ng-binding").should(have.text("4"))
+            element("h2.ng-binding").should(have.text("3"))
         }
     }
 
@@ -56,14 +57,17 @@ fun ngModel(model: String): By {
     return By.xpath("[ng-model='$model']")
 }
 
+@Step
 fun Browser.select(by: String): Select {
     return Select(element(by).webElement)
 }
 
+@Step
 fun KElement.setValue(value: Any) {
     this.setValue(value.toString())
 }
 
+@Step
 fun KElement.shouldBe(value: Any) {
     this.should(com.automation.remarks.kirk.conditions.have.text(value.toString()))
 }

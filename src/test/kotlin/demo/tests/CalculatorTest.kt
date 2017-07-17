@@ -5,9 +5,15 @@ import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.core.drive
+import com.automation.remarks.kirk.core.driverFactory
+import io.github.bonigarcia.wdm.ChromeDriverManager
 import io.qameta.allure.Step
 import org.openqa.selenium.By
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.support.ui.Select
+import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
 /**
@@ -15,7 +21,24 @@ import org.testng.annotations.Test
  */
 class CalculatorTest {
 
+    @BeforeClass
+    fun setUp() {
+        System.setProperty("kirk.baseUrl", "http://juliemr.github.io/protractor-demo/")
+    }
+
     @Test fun testCanAddTwoNumbers() {
+        ChromeDriverManager.getInstance().setup()
+        val ops = ChromeOptions()
+        ops.setBinary("/home/sergey/Github/kotlin-demo/devtools/chrome-wrapper.sh")
+        ops.addArguments("--devtools-proxy-binary=/home/sergey/Github/kotlin-demo/devtools/devtools-proxy")
+
+        val caps = DesiredCapabilities()
+
+        caps.setCapability(ChromeOptions.CAPABILITY, ops)
+        driverFactory.setWebDriver(ChromeDriver(caps))
+
+        
+
         Browser.drive {
             to("http://juliemr.github.io/protractor-demo/")
             element("input[ng-model='first']").setValue("1")
@@ -27,7 +50,6 @@ class CalculatorTest {
     }
 
     @Test fun testCanDivide() {
-        System.setProperty("kirk.baseUrl", "http://juliemr.github.io/protractor-demo/")
         Browser.drive {
             to(::Calculator) {
                 first.setValue(10)

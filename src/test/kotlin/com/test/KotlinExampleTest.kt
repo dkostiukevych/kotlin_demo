@@ -6,6 +6,7 @@ import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.contain
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.core.drive
+import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
 
@@ -14,18 +15,34 @@ import java.io.File
  */
 class KotlinExampleTest {
 
+    @BeforeClass
+    fun setUp() {
+        Browser.drive { to(::LoginPage).login("admin", "admin") }
+    }
+
     @Test
     fun testCanLogin() {
         Browser.drive {
-            to(::LoginPage).login("admin", "admin")
-            at(::MainPage).logo.should(have.text("Video service"))
             at(::MainPage) {
+                logo.click()
+                logo.should(have.text("Video service"))
                 uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
                 all("[data-parent='#accordion'] strong").should(contain.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
             }
         }
     }
+
+    @Test fun testAdminCanAddNewUser() {
+        Browser.drive {
+            at(::MainPage) { usersTab.click() }
+            at(::UsersPage) {
+                addNewUser("Ivan", "123456", "ivan@email.com")
+                table.names.should(contain.elementWithText("Ivan"))
+            }
+        }
+    }
 }
+
 
 fun KElement.uploadFile(name: String) {
     val resource = Thread.currentThread().contextClassLoader.getResource(name)
@@ -46,10 +63,31 @@ internal class LoginPage(browser: Browser) : Page(browser) {
 
 internal class MainPage(browser: Browser) : Page(browser) {
 
-    var logo = element("a.navbar-brand")
+    val logo = element("a.navbar-brand")
+    val usersTab = element("#users_link")
 
     fun uploadVideo(name: String) {
         element("#filestyle-0").uploadFile(name)
         element("#upload_submit > button").click()
     }
+}
+
+internal class UsersPage(browser: Browser) : Page(browser) {
+
+    override val url: String?
+        get() = "/users"
+
+    val table = Table(element("#users_table"))
+
+    fun addNewUser(name: String, password: String, email: String) {
+        element("#inputNewUserName").setValue(name)
+        element("#inputNewUserPassword").setValue(password)
+        element("#newUserEmail").setValue(email)
+        element("#add_new_user_btn").click()
+    }
+}
+
+internal class Table(root: KElement) {
+
+    val names = root.all("td:nth-child(2)")
 }

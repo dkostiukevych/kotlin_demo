@@ -37,8 +37,6 @@ class CalculatorTest {
         caps.setCapability(ChromeOptions.CAPABILITY, ops)
         driverFactory.setWebDriver(ChromeDriver(caps))
 
-        
-
         Browser.drive {
             to("http://juliemr.github.io/protractor-demo/")
             element("input[ng-model='first']").setValue("1")
@@ -72,16 +70,19 @@ class Calculator(browser: Browser) : Page(browser) {
     val goBtn = element("#gobutton")
     val result = element("h2.ng-binding")
 
-    val select by lazy { browser.select("select[ng-model='operator']") }
+    val select = browser.select(element("select[ng-model='operator']"))
 }
 
 fun ngModel(model: String): By {
     return By.xpath("[ng-model='$model']")
 }
 
-@Step
-fun Browser.select(by: String): Select {
-    return Select(element(by).webElement)
+fun Browser.select(cssLocator: String): Select {
+    return select(element(cssLocator))
+}
+
+fun Browser.select(element: KElement): Select {
+    return Select(element.webElement)
 }
 
 @Step

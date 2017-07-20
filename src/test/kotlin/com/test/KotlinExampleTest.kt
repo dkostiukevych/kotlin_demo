@@ -6,6 +6,7 @@ import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.contain
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.core.drive
+import com.automation.remarks.kirk.core.driverFactory
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
@@ -17,7 +18,7 @@ class KotlinExampleTest {
 
     @BeforeClass
     fun setUp() {
-        Browser.drive { to(::LoginPage).login("admin", "admin") }
+        Browser.open(::LoginPage).login("admin", "admin")
     }
 
     @Test
@@ -33,8 +34,8 @@ class KotlinExampleTest {
     }
 
     @Test fun testAdminCanAddNewUser() {
-        Browser.drive {
-            at(::MainPage) { usersTab.click() }
+        Browser.open(::MainPage) {
+            usersTab.click()
             at(::UsersPage) {
                 addNewUser("Ivan", "123456", "ivan@email.com")
                 table.names.should(contain.elementWithText("Ivan"))
@@ -43,6 +44,20 @@ class KotlinExampleTest {
     }
 }
 
+fun <T : Page> Browser.Companion.open(pageClass: (Browser) -> T): T {
+    val browser = Browser(driverFactory.getDriver())
+    val page = pageClass(browser)
+    page.url?.let { browser.open(it) }
+    return page
+}
+
+fun <T : Page> Browser.Companion.open(pageClass: (Browser) -> T, block: T.() -> Unit) {
+    open(pageClass).block()
+}
+
+fun <T : Page> Page.at(pageClass: (Browser) -> T, block: T.() -> Unit) {
+    pageClass(Browser(driverFactory.getDriver())).block()
+}
 
 fun KElement.uploadFile(name: String) {
     val resource = Thread.currentThread().contextClassLoader.getResource(name)

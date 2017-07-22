@@ -1,8 +1,9 @@
 package demo.tests
 
 import com.automation.remarks.kirk.Browser
-import com.automation.remarks.kirk.Browser.Companion.open
 import com.automation.remarks.kirk.KElement
+import com.automation.remarks.kirk.Kirk.Companion.drive
+import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.ext.select
@@ -34,7 +35,7 @@ class CalculatorTest {
 
         caps.setCapability(ChromeOptions.CAPABILITY, ops)
 
-        Browser.drive(ChromeDriver(caps)) {
+        drive(ChromeDriver(caps)) {
             to("http://juliemr.github.io/protractor-demo/")
             element("input[ng-model='first']").setValue("1")
             element("input[ng-model='second']").setValue("2")

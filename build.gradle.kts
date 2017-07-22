@@ -7,6 +7,7 @@ import org.gradle.script.lang.kotlin.*
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.1.2"
     id("io.qameta.allure") version "2.3"
+    java
 }
 
 apply<AllurePlugin>()
@@ -19,6 +20,7 @@ repositories {
 dependencies {
     //compile(project(":kirk"))
     compile("com.automation-remarks:kirk:0.7.2")
+    compileOnly("org.projectlombok:lombok:1.16.18")
     //compile(fileTree("libs"))
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.2-4")
     compile("org.testng:testng:6.11")

@@ -1,13 +1,12 @@
 package com.test
 
 import com.automation.remarks.kirk.Browser
-import com.automation.remarks.kirk.Browser.Companion.at
-import com.automation.remarks.kirk.Browser.Companion.open
 import com.automation.remarks.kirk.KElement
+import com.automation.remarks.kirk.Kirk.Companion.at
+import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.contain
 import com.automation.remarks.kirk.conditions.have
-import com.automation.remarks.kirk.core.driverFactory
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
@@ -24,7 +23,7 @@ class KotlinExampleTest {
 
     @Test
     fun testCanLogin() {
-        Browser.at(::MainPage) {
+        at(::MainPage) {
             logo.click()
             logo.should(have.text("Video service"))
             uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
@@ -39,10 +38,6 @@ class KotlinExampleTest {
             table.names.should(contain.elementWithText("Ivan"))
         }
     }
-}
-
-fun <T : Page> Page.at(pageClass: (Browser) -> T, block: T.() -> Unit) {
-    pageClass(Browser(driverFactory.getDriver())).block()
 }
 
 fun KElement.uploadFile(name: String) {

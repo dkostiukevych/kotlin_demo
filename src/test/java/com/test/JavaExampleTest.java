@@ -2,39 +2,33 @@ package com.test;
 
 import com.automation.remarks.kirk.Browser;
 import com.automation.remarks.kirk.KElement;
+import com.automation.remarks.kirk.Kirk;
 import com.automation.remarks.kirk.Page;
-import com.automation.remarks.kirk.conditions.CollectionContainText;
-import com.automation.remarks.kirk.conditions.Have;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
+
+import static com.automation.remarks.kirk.Kirk.at;
+import static com.automation.remarks.kirk.conditions.ContainKt.contain;
+import static com.automation.remarks.kirk.conditions.HaveKt.have;
 
 /**
  * Created by sergey on 16.07.17.
  */
 public class JavaExampleTest {
 
-//  @Before
-//  public void setUp() throws Exception {
-//    ChromeDriverManager.getInstance().setup();
-//  }
-
   @Test
   public void canLogin() {
-    Browser chrome = new Browser();
-    chrome
-        .to(LoginPageJ::new)
+    Kirk.open(LoginPageJ::new)
         .login("admin", "admin");
-    MainPageJ mainPage = chrome
-        .at(MainPageJ::new);
-
-    mainPage.logo.should(new Have().text("Video service"));
+    MainPageJ mainPage = at(MainPageJ::new);
+    mainPage.logo.should(have.text("Video service"));
     mainPage.uploadVideo("/home/sergey/Github/kotlin-demo/src/test/resources/shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi");
-    mainPage.all("[data-parent='#accordion'] strong").should(new CollectionContainText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"));
+    mainPage.all("[data-parent='#accordion'] strong").should(contain.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"));
   }
 }
 
-
 class LoginPageJ extends Page {
+
   public LoginPageJ(Browser browser) {
     super(browser);
   }
@@ -53,13 +47,14 @@ class LoginPageJ extends Page {
 }
 
 class MainPageJ extends Page {
+
+  public KElement logo = element("a.navbar-brand");
+
   public MainPageJ(Browser browser) {
     super(browser);
   }
 
-  public KElement logo = element("a.navbar-brand");
-
-  public void uploadVideo(String path){
+  public void uploadVideo(String path) {
     element("#filestyle-0").sendKeys(path);
     element("#upload_submit > button").click();
   }

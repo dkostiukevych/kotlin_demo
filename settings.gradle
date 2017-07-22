@@ -17,4 +17,4 @@ include 'services:webservice'
 
 rootProject.name = 'kotlin-demo'
 //include ":kirk"
-//project(":kirk").projectDir = file("/home/sergey/Github/kirk")
+//project(":kirk").projectDir = file("../kirk-core")

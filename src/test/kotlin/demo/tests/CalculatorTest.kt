@@ -1,18 +1,16 @@
 package demo.tests
 
 import com.automation.remarks.kirk.Browser
+import com.automation.remarks.kirk.Browser.Companion.open
 import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.have
-import com.automation.remarks.kirk.core.drive
-import com.automation.remarks.kirk.core.driverFactory
+import com.automation.remarks.kirk.ext.select
 import io.github.bonigarcia.wdm.ChromeDriverManager
 import io.qameta.allure.Step
-import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.remote.DesiredCapabilities
-import org.openqa.selenium.support.ui.Select
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
@@ -35,9 +33,8 @@ class CalculatorTest {
         val caps = DesiredCapabilities()
 
         caps.setCapability(ChromeOptions.CAPABILITY, ops)
-        driverFactory.setWebDriver(ChromeDriver(caps))
 
-        Browser.drive {
+        Browser.drive(ChromeDriver(caps)) {
             to("http://juliemr.github.io/protractor-demo/")
             element("input[ng-model='first']").setValue("1")
             element("input[ng-model='second']").setValue("2")
@@ -48,14 +45,12 @@ class CalculatorTest {
     }
 
     @Test fun testCanDivide() {
-        Browser.drive {
-            to(::Calculator) {
-                first.setValue(10)
-                second.setValue(2)
-                select.selectByVisibleText("/")
-                goBtn.click()
-                result.shouldBe(5)
-            }
+        open(::Calculator) {
+            first.set(10)
+            second.set(2)
+            select.selectByVisibleText("/")
+            goBtn.click()
+            result.shouldBe(5)
         }
     }
 }
@@ -70,23 +65,12 @@ class Calculator(browser: Browser) : Page(browser) {
     val goBtn = element("#gobutton")
     val result = element("h2.ng-binding")
 
-    val select = browser.select(element("select[ng-model='operator']"))
+    val select = select("select[ng-model='operator']")
 }
 
-fun ngModel(model: String): By {
-    return By.xpath("[ng-model='$model']")
-}
-
-fun Browser.select(cssLocator: String): Select {
-    return select(element(cssLocator))
-}
-
-fun Browser.select(element: KElement): Select {
-    return Select(element.webElement)
-}
 
 @Step
-fun KElement.setValue(value: Any) {
+fun KElement.set(value: Any) {
     this.setValue(value.toString())
 }
 

@@ -1,11 +1,12 @@
 package com.test
 
 import com.automation.remarks.kirk.Browser
+import com.automation.remarks.kirk.Browser.Companion.at
+import com.automation.remarks.kirk.Browser.Companion.open
 import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.contain
 import com.automation.remarks.kirk.conditions.have
-import com.automation.remarks.kirk.core.drive
 import com.automation.remarks.kirk.core.driverFactory
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
@@ -18,41 +19,26 @@ class KotlinExampleTest {
 
     @BeforeClass
     fun setUp() {
-        Browser.open(::LoginPage).login("admin", "admin")
+        open(::LoginPage).login("admin", "admin")
     }
 
     @Test
     fun testCanLogin() {
-        Browser.drive {
-            at(::MainPage) {
-                logo.click()
-                logo.should(have.text("Video service"))
-                uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
-                all("[data-parent='#accordion'] strong").should(contain.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
-            }
+        Browser.at(::MainPage) {
+            logo.click()
+            logo.should(have.text("Video service"))
+            uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
+            all("[data-parent='#accordion'] strong").should(contain.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
         }
     }
 
     @Test fun testAdminCanAddNewUser() {
-        Browser.open(::MainPage) {
-            usersTab.click()
-            at(::UsersPage) {
-                addNewUser("Ivan", "123456", "ivan@email.com")
-                table.names.should(contain.elementWithText("Ivan"))
-            }
+        open(::MainPage) { usersTab.click() }
+        at(::UsersPage) {
+            addNewUser("Ivan", "123456", "ivan@email.com")
+            table.names.should(contain.elementWithText("Ivan"))
         }
     }
-}
-
-fun <T : Page> Browser.Companion.open(pageClass: (Browser) -> T): T {
-    val browser = Browser(driverFactory.getDriver())
-    val page = pageClass(browser)
-    page.url?.let { browser.open(it) }
-    return page
-}
-
-fun <T : Page> Browser.Companion.open(pageClass: (Browser) -> T, block: T.() -> Unit) {
-    open(pageClass).block()
 }
 
 fun <T : Page> Page.at(pageClass: (Browser) -> T, block: T.() -> Unit) {

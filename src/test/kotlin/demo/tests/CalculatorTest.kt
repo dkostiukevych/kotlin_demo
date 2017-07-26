@@ -7,11 +7,7 @@ import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.ext.select
-import io.github.bonigarcia.wdm.ChromeDriverManager
 import io.qameta.allure.Step
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
-import org.openqa.selenium.remote.DesiredCapabilities
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
@@ -26,20 +22,20 @@ class CalculatorTest {
     }
 
     @Test fun testCanAddTwoNumbers() {
-        ChromeDriverManager.getInstance().setup()
-        val ops = ChromeOptions()
-        ops.setBinary("/home/sergey/Github/kotlin-demo/devtools/chrome-wrapper.sh")
-        ops.addArguments("--devtools-proxy-binary=/home/sergey/Github/kotlin-demo/devtools/devtools-proxy")
+//        ChromeDriverManager.getInstance().setup()
+//        val ops = ChromeOptions()
+//        ops.setBinary("/home/sergey/Github/kotlin-demo/devtools/chrome-wrapper.sh")
+//        ops.addArguments("--devtools-proxy-binary=/home/sergey/Github/kotlin-demo/devtools/devtools-proxy")
+//
+//        val caps = DesiredCapabilities()
+//
+//        caps.setCapability(ChromeOptions.CAPABILITY, ops)
 
-        val caps = DesiredCapabilities()
-
-        caps.setCapability(ChromeOptions.CAPABILITY, ops)
-
-        drive(ChromeDriver(caps)) {
+        drive {
             to("http://juliemr.github.io/protractor-demo/")
-            element("input[ng-model='first']").setValue("1")
-            element("input[ng-model='second']").setValue("2")
-            select("select[ng-model='operator']").selectByVisibleText("+")
+            element("input[ng-model='first']") value "1"
+            element("input[ng-model='second']") value "2"
+            select("select[ng-model='operator']").selectOption("+")
             element("#gobutton").click()
             element("h2.ng-binding").should(have.text("3"))
         }
@@ -47,11 +43,11 @@ class CalculatorTest {
 
     @Test fun testCanDivide() {
         open(::Calculator) {
-            first.set(10)
-            second.set(2)
-            select.selectByVisibleText("/")
+            first value 10
+            second value 2
+            select.selectOption("/")
             goBtn.click()
-            result.shouldBe(5)
+            result shouldBe 5
         }
     }
 }
@@ -71,11 +67,11 @@ class Calculator(browser: Browser) : Page(browser) {
 
 
 @Step
-fun KElement.set(value: Any) {
+infix fun KElement.value(value: Any) {
     this.setValue(value.toString())
 }
 
 @Step
-fun KElement.shouldBe(value: Any) {
+infix fun KElement.shouldBe(value: Any) {
     this.should(com.automation.remarks.kirk.conditions.have.text(value.toString()))
 }

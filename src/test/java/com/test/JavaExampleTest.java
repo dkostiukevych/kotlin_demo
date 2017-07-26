@@ -55,7 +55,7 @@ class MainPageJ extends Page {
   }
 
   public void uploadVideo(String path) {
-    element("#filestyle-0").sendKeys(path);
+    element("#filestyle-0").setValue(path);
     element("#upload_submit > button").click();
   }
 }

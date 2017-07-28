@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
 import static com.automation.remarks.kirk.Kirk.at;
-import static com.automation.remarks.kirk.conditions.ContainKt.contain;
 import static com.automation.remarks.kirk.conditions.HaveKt.have;
 
 /**
@@ -22,8 +21,8 @@ public class JavaExampleTest {
         .login("admin", "admin");
     MainPageJ mainPage = at(MainPageJ::new);
     mainPage.logo.should(have.text("Video service"));
-    mainPage.uploadVideo("/home/sergey/Github/kotlin-demo/src/test/resources/shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi");
-    mainPage.all("[data-parent='#accordion'] strong").should(contain.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"));
+    mainPage.uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi");
+    mainPage.all("[data-parent='#accordion'] strong").should(have.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"));
   }
 }
 

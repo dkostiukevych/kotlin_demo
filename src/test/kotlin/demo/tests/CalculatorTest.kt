@@ -8,6 +8,7 @@ import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.have
 import com.automation.remarks.kirk.ext.select
 import io.qameta.allure.Step
+import khttp.get
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
@@ -32,6 +33,19 @@ class CalculatorTest {
 //        caps.setCapability(ChromeOptions.CAPABILITY, ops)
 
         drive {
+
+            val resp = get("http://localhost:9222/json/version").jsonObject["WebKit-Version"]
+
+            val hash = Regex("\\(([^\\)]+)\\)").find(resp.toString())?.value
+
+            val tabs = get("http://localhost:9222/json").jsonArray.getJSONObject(0)["devtoolsFrontendUrl"]
+
+            val id = tabs.toString().removePrefix("/devtools/")//Regex("[^/]+\$").find(tabs.toString())?.value
+
+            val url_template = "https://chrome-devtools-frontend.appspot.com/serve_file/$hash/$id&remoteFrontend=true"
+
+            println(url_template)
+
             to("http://juliemr.github.io/protractor-demo/")
             element("input[ng-model='first']") value "1"
             element("input[ng-model='second']") value "2"

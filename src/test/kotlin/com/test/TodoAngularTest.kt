@@ -7,7 +7,7 @@ import org.testng.annotations.Test
 /**
  * Created by sergey on 09.07.17.
  */
-// tag::TodoAngularTest[]
+
 class TodoAngularTest {
     @Test fun testCanAddNewTaskAndDelete() {
         open(::TodoPage) {
@@ -28,4 +28,3 @@ class TodoAngularTest {
         }
     }
 }
-// end::TodoAngularTest[]

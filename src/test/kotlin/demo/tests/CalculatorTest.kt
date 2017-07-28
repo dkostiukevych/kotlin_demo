@@ -36,7 +36,7 @@ class CalculatorTest {
 
             val resp = get("http://localhost:9222/json/version").jsonObject["WebKit-Version"]
 
-            val hash = Regex("\\(([^\\)]+)\\)").find(resp.toString())?.value
+            val hash = resp.toString().substringAfter("(").substringBefore(")")//Regex("\\\\((.*?)\\\\)").find(resp.toString())?.value
 
             val tabs = get("http://localhost:9222/json").jsonArray.getJSONObject(0)["devtoolsFrontendUrl"]
 

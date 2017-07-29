@@ -13,7 +13,7 @@ plugins {
 apply<AllurePlugin>()
 
 repositories {
-    //mavenLocal()
+    mavenLocal()
     jcenter()
     maven {
         setUrl("https://jitpack.io")
@@ -23,9 +23,11 @@ repositories {
 dependencies {
     //compile(project(":kirk"))
     compile("com.github.jkcclemens:khttp:0.1.0")
-    compile("com.automation-remarks:kirk:0.7.3")
+    compile("com.automation-remarks:kirk:0.7.4")
     compileOnly("org.projectlombok:lombok:1.16.18")
     //compile(fileTree("libs"))
+    compile("com.codeborne:selenide:4.5.1")
+
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.2-4")
     compile("org.testng:testng:6.11")
 }

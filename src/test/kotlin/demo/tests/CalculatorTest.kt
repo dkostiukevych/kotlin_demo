@@ -5,8 +5,15 @@ import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Kirk.Companion.drive
 import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
-import com.automation.remarks.kirk.conditions.have
+import com.automation.remarks.kirk.conditions.text
 import com.automation.remarks.kirk.ext.select
+import com.codeborne.selenide.Configuration
+import com.codeborne.selenide.ElementsCollection
+import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.`$$`
+import com.codeborne.selenide.Selenide.`$`
+import com.codeborne.selenide.SelenideElement
+import io.github.bonigarcia.wdm.ChromeDriverManager
 import io.qameta.allure.Step
 import khttp.get
 import org.testng.annotations.BeforeClass
@@ -22,37 +29,36 @@ class CalculatorTest {
         System.setProperty("kirk.baseUrl", "http://juliemr.github.io/protractor-demo/")
     }
 
+    fun openDevTools(){
+        val resp = get("http://localhost:9222/json/version").jsonObject["WebKit-Version"]
+        val hash = resp.toString().substringAfter("(").substringBefore(")")//Regex("\\\\((.*?)\\\\)").find(resp.toString())?.value
+        val tabs = get("http://localhost:9222/json").jsonArray.getJSONObject(0)["devtoolsFrontendUrl"]
+        val id = tabs.toString().removePrefix("/devtools/")//Regex("[^/]+\$").find(tabs.toString())?.value
+        val url_template = "https://chrome-devtools-frontend.appspot.com/serve_file/$hash/$id&remoteFrontend=true"
+        println(url_template)
+    }
+
     @Test fun testCanAddTwoNumbers() {
-//        ChromeDriverManager.getInstance().setup()
-//        val ops = ChromeOptions()
-//        ops.setBinary("/home/sergey/Github/kotlin-demo/devtools/chrome-wrapper.sh")
-//        ops.addArguments("--devtools-proxy-binary=/home/sergey/Github/kotlin-demo/devtools/devtools-proxy")
-//
-//        val caps = DesiredCapabilities()
-//
-//        caps.setCapability(ChromeOptions.CAPABILITY, ops)
-
         drive {
-
-            val resp = get("http://localhost:9222/json/version").jsonObject["WebKit-Version"]
-
-            val hash = resp.toString().substringAfter("(").substringBefore(")")//Regex("\\\\((.*?)\\\\)").find(resp.toString())?.value
-
-            val tabs = get("http://localhost:9222/json").jsonArray.getJSONObject(0)["devtoolsFrontendUrl"]
-
-            val id = tabs.toString().removePrefix("/devtools/")//Regex("[^/]+\$").find(tabs.toString())?.value
-
-            val url_template = "https://chrome-devtools-frontend.appspot.com/serve_file/$hash/$id&remoteFrontend=true"
-
-            println(url_template)
-
+            //openDevTools()
             to("http://juliemr.github.io/protractor-demo/")
             element("input[ng-model='first']") value "1"
             element("input[ng-model='second']") value "2"
             select("select[ng-model='operator']").selectOption("+")
             element("#gobutton").click()
-            element("h2.ng-binding").should(have.text("3"))
+            element("h2.ng-binding").shouldHave(text("2"))
         }
+    }
+
+    @Test fun testCanDivideSelenide(){
+        ChromeDriverManager.getInstance().setup()
+        Configuration.browser = "chrome"
+        Selenide.open("http://juliemr.github.io/protractor-demo/")
+        element("input[ng-model='first']").value = "1"
+        element("input[ng-model='second']").value = "2"
+        element("select[ng-model='operator']").selectOption("+")
+        element("#gobutton").click()
+        element("h2.ng-binding").shouldHave(com.codeborne.selenide.Condition.exactText("2"))
     }
 
     @Test fun testCanDivide() {
@@ -61,7 +67,7 @@ class CalculatorTest {
             second value 2
             select.selectOption("/")
             goBtn.click()
-            result shouldBe 5
+            result.shouldHave(text("5"))
         }
     }
 }
@@ -85,7 +91,11 @@ infix fun KElement.value(value: Any) {
     this.setValue(value.toString())
 }
 
-@Step
-infix fun KElement.shouldBe(value: Any) {
-    this.should(com.automation.remarks.kirk.conditions.have.text(value.toString()))
+
+fun element(selector: String) : SelenideElement {
+    return `$`(selector);
+}
+
+fun all(selector: String) : ElementsCollection {
+    return `$$`(selector);
 }

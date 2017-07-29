@@ -5,7 +5,8 @@ import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Kirk.Companion.at
 import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
-import com.automation.remarks.kirk.conditions.have
+import com.automation.remarks.kirk.conditions.elementWithText
+import com.automation.remarks.kirk.conditions.text
 import com.automation.remarks.kirk.ext.uploadFile
 import demo.tests.value
 import org.testng.annotations.BeforeClass
@@ -25,9 +26,9 @@ class KotlinExampleTest {
     fun testCanLogin() {
         at(::MainPage) {
             logo.click()
-            logo.should(have.text("Video service"))
+            logo.shouldHave(text("Video service"))
             uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
-            videoFiles.should(have.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
+            videoFiles.shouldHave(elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
         }
     }
 
@@ -35,7 +36,7 @@ class KotlinExampleTest {
         open(::MainPage).usersTab.click()
         at(::UsersPage) {
             addNewUser("Ivan", "123456", "ivan@email.com")
-            table.names.should(have.elementWithText("Ivan"))
+            table.names.shouldHave(elementWithText("Ivan"))
         }
     }
 
@@ -43,7 +44,7 @@ class KotlinExampleTest {
         at(::MainPage) {
             uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
             deleteVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
-            videoFiles.shouldNot(have.elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
+            videoFiles.shouldNotHave(elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
         }
     }
 }
@@ -62,6 +63,7 @@ internal class LoginPage(browser: Browser) : Page(browser) {
 
 internal class MainPage(browser: Browser) : Page(browser) {
 
+    @JvmField
     val logo = element("a.navbar-brand")
     val usersTab = element("#users_link")
     val videoFiles = all("[data-parent='#accordion'] strong")

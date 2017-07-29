@@ -7,7 +7,6 @@ import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.elementWithText
 import com.automation.remarks.kirk.conditions.text
-import com.automation.remarks.kirk.ext.uploadFile
 import demo.tests.value
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test

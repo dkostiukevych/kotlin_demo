@@ -2,56 +2,49 @@ package com.test
 
 import com.automation.remarks.kirk.Browser
 import com.automation.remarks.kirk.KElement
-import com.automation.remarks.kirk.Kirk.Companion.at
-import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
-import com.automation.remarks.kirk.conditions.elementWithText
-import com.automation.remarks.kirk.conditions.text
 import demo.tests.value
-import org.testng.annotations.BeforeClass
-import org.testng.annotations.Test
 
 /**
  * Created by sergey on 16.07.17.
  */
 class KotlinExampleTest {
 
-    @BeforeClass
-    fun setUp() {
-        open(::LoginPage).login("admin", "admin")
-    }
-
-    @Test
-    fun testCanLogin() {
-        at(::MainPage) {
-            logo.click()
-            logo.shouldHave(text("Video service"))
-            uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
-            videoFiles.shouldHave(elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
-        }
-    }
-
-    @Test fun testAdminCanAddNewUser() {
-        open(::MainPage).usersTab.click()
-        at(::UsersPage) {
-            addNewUser("Ivan", "123456", "ivan@email.com")
-            table.names.shouldHave(elementWithText("Ivan"))
-        }
-    }
-
-    @Test fun testCanDeleteVideo() {
-        at(::MainPage) {
-            uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
-            deleteVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
-            videoFiles.shouldNotHave(elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
-        }
-    }
+//    @BeforeClass
+//    fun setUp() {
+//        open(::LoginPage).login("admin", "admin")
+//    }
+//
+//    @Test
+//    fun testCanLogin() {
+//        at(::MainPage) {
+//            logo.click()
+//            logo.shouldHave(text("Video service"))
+//            uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
+//            videoFiles.shouldHave(elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
+//        }
+//    }
+//
+//    @Test fun testAdminCanAddNewUser() {
+//        open(::MainPage).usersTab.click()
+//        at(::UsersPage) {
+//            addNewUser("Ivan", "123456", "ivan@email.com")
+//            table.names.shouldHave(elementWithText("Ivan"))
+//        }
+//    }
+//
+//    @Test fun testCanDeleteVideo() {
+//        at(::MainPage) {
+//            uploadVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
+//            deleteVideo("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi")
+//            videoFiles.shouldNotHave(elementWithText("shouldBeCustomFolderForVideo_recording_2017_09_01_19_37_10.avi"))
+//        }
+//    }
 }
 
 internal class LoginPage(browser: Browser) : Page(browser) {
 
-    override val url: String?
-        get() = "/"
+    override val url: String? = "/"
 
     fun login(name: String, password: String) {
         element("#inputEmail3") value name
@@ -80,8 +73,7 @@ internal class MainPage(browser: Browser) : Page(browser) {
 
 internal class UsersPage(browser: Browser) : Page(browser) {
 
-    override val url: String?
-        get() = "/users"
+    override val url = "/users"
 
     val table = Table(element("#users_table"))
 

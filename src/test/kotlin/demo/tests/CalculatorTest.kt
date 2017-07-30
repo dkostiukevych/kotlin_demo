@@ -9,6 +9,7 @@ import com.codeborne.selenide.ElementsCollection
 import com.codeborne.selenide.Selenide.`$$`
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
+import io.qameta.allure.Step
 import khttp.get
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
@@ -99,7 +100,7 @@ class Calculator(browser: Browser) : Page(browser) {
     val select = select("select[ng-model='operator']")
 }
 
-
+@Step
 infix fun KElement.value(value: Any) {
     this.setValue(value.toString())
 }

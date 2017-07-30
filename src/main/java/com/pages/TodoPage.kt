@@ -4,6 +4,7 @@ import com.automation.remarks.kirk.Browser
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.core.byXpath
 import domain.hover
+import io.qameta.allure.Step
 
 /**
  * Created by sergey on 09.07.17.
@@ -12,10 +13,13 @@ import domain.hover
 class TodoPage(browser: Browser) : Page(browser) {
     override val url = "http://todomvc.com/examples/angularjs/"
 
-    val counter = element("#todo-count strong")
+    val counter
+        @Step
+        get() = element("#todo-count strong")
     val taskList = all("label.ng-binding")
 
-    fun addTasks(vararg tasks: String) {
+
+    @Step fun addTasks(vararg tasks: String) {
         for (task in tasks) {
             element("#new-todo")
                     .setValue(task)
@@ -23,19 +27,19 @@ class TodoPage(browser: Browser) : Page(browser) {
         }
     }
 
-    fun deleteTask(name: String) {
+    @Step fun deleteTask(name: String) {
         browser.interact { hover(element("#todo-list li div input")) }
         element(byXpath("//label[text()='$name']/following-sibling::button"))
                 .click()
     }
 
-    fun deactivateTask(vararg tasks: String) {
+    @Step fun deactivateTask(vararg tasks: String) {
         for (task in tasks) {
             element(byXpath("//label[text()='$task']/preceding-sibling::input")).click()
         }
     }
 
-    fun goToCompletedTab() {
+    @Step fun goToCompletedTab() {
         element("#filters li:nth-child(3) a").click()
     }
 }

@@ -4,7 +4,11 @@ import com.automation.remarks.kirk.Browser
 import com.automation.remarks.kirk.Kirk.Companion.drive
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.text
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.testng.annotations.Test
+import java.net.URI
+
 
 /**
  * Created by sergey on 06.08.17.
@@ -13,7 +17,16 @@ class PiggyTest {
 
     @Test
     fun testCanAddIncome() {
-        drive {
+        val browser = DesiredCapabilities()
+        browser.browserName = "chrome"
+        browser.version = "59.0"
+
+        val driver = RemoteWebDriver(
+                URI.create("http://35.202.183.239:4444/wd/hub").toURL(),
+                browser
+        )
+
+        drive(driver) {
             to("http://my-piggymetrics.rhcloud.com/")
             at(::Login).loginAs("qaswdefrgt", "123456")
             at(::MainPage) {

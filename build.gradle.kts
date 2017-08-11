@@ -23,7 +23,7 @@ repositories {
 dependencies {
     //compile(project(":kirk"))
     compile("com.github.jkcclemens:khttp:0.1.0")
-    compile("com.automation-remarks:kirk:0.7.4")
+    compile("com.automation-remarks:kirk:0.7.5")
     compileOnly("org.projectlombok:lombok:1.16.18")
     //compile(fileTree("libs"))
     compile("com.codeborne:selenide:4.5.1")

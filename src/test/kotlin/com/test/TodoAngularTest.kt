@@ -17,19 +17,19 @@ import java.net.URI
 
 class TodoAngularTest {
 
-    @BeforeClass fun setUp() {
-        val browser = DesiredCapabilities()
-        browser.browserName = "chrome"
-        browser.version = "59.0"
-        browser.setCapability("enableVNC", true)
-
-        val driver = RemoteWebDriver(
-                URI.create("http://35.202.183.239:4444/wd/hub").toURL(),
-                browser
-        )
-
-        driverFactory.setWebDriver(driver)
-    }
+//    @BeforeClass fun setUp() {
+//        val browser = DesiredCapabilities()
+//        browser.browserName = "chrome"
+//        browser.version = "59.0"
+//        browser.setCapability("enableVNC", true)
+//
+//        val driver = RemoteWebDriver(
+//                URI.create("http://35.202.183.239:4444/wd/hub").toURL(),
+//                browser
+//        )
+//
+//        driverFactory.setWebDriver(driver)
+//    }
 
 
 

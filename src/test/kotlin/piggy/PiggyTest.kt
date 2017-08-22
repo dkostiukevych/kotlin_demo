@@ -1,7 +1,6 @@
 package piggy
 
 import com.automation.remarks.kirk.Browser
-import com.automation.remarks.kirk.Kirk.Companion.drive
 import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.clickable
@@ -16,24 +15,14 @@ class PiggyTest {
 
     @Test
     fun testCanAddIncome() {
-//        val browser = DesiredCapabilities()
-//        browser.browserName = "chrome"
-//        browser.version = "59.0"
-//
-//        val driver = RemoteWebDriver(
-//                URI.create("http://35.202.183.239:4444/wd/hub").toURL(),
-//                browser
-//        )
-
-        drive {
-            to("http://my-piggymetrics.rhcloud.com/")
-            at(::Login).loginAs("qaswdefrgt", "123456")
-            at(::MainPage) {
-                addIncome("Salary", 1000)
-                incomeItem.shouldHave(text("1 000 $ / PER MONTH"))
-            }
-        }
+        open(::Login)
+                .loginAs("qaswdefrgt", "123456")
+                .then {
+                    addIncome("Salary", 1000)
+                    incomeItem.shouldHave(text("1 000 $ / PER MONTH"))
+                }
     }
+
 
     @Test
     fun testCatDeleteIncome() {
@@ -73,4 +62,8 @@ class MainPage(browser: Browser) : Page(browser) {
 
 fun <T : Page> Page.page(pageClass: (Browser) -> T): T {
     return at(pageClass)
+}
+
+fun <T> T.then(block: T.() -> Unit): T {
+    return this.apply(block)
 }

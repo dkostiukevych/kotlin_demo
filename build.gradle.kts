@@ -3,18 +3,22 @@ import io.qameta.allure.gradle.AllurePlugin
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.script.lang.kotlin.*
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.1.4-2"
     id("io.qameta.allure") version "2.3"
     java
 }
+apply {
+    plugin("kotlin")
+}
 
 apply<AllurePlugin>()
 
 repositories {
     mavenLocal()
-    //jcenter()
+    jcenter()
     maven {
         setUrl("https://jitpack.io")
     }
@@ -23,7 +27,7 @@ repositories {
 dependencies {
     //compile(project(":kirk"))
     compile("com.github.jkcclemens:khttp:0.1.0")
-    compile("com.automation-remarks:kirk:0.8")
+    compile("com.automation-remarks:kirk:0.8.2")
     compileOnly("org.projectlombok:lombok:1.16.18")
     //compile(fileTree("libs"))
     compile("com.codeborne:selenide:4.5.1")
@@ -44,3 +48,11 @@ val allure: AllureExtension by extensions
 allure.autoconfigure = true
 allure.version = "2.1.1"
 allure.configuration = "compile"
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}

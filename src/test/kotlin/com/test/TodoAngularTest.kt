@@ -4,12 +4,8 @@ import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.conditions.exactText
 import com.automation.remarks.kirk.conditions.size
 import com.automation.remarks.kirk.conditions.text
-import com.automation.remarks.kirk.core.driverFactory
-import org.openqa.selenium.remote.DesiredCapabilities
-import org.openqa.selenium.remote.RemoteWebDriver
-import org.testng.annotations.BeforeClass
+import com.automation.remarks.kirk.conditions.visible
 import org.testng.annotations.Test
-import java.net.URI
 
 /**
  * Created by sergey on 09.07.17.
@@ -49,6 +45,15 @@ class TodoAngularTest {
             counter.shouldHave(text("2"))
             goToCompletedTab()
             taskList.shouldHave(exactText("A"))
+        }
+    }
+
+    @Test fun testCanDeactivateTaskStale() {
+        open(::TodoPage) {
+            addTasks("A", "B", "C")
+            val taskA = tasks[0].waitUntil(visible)
+            deleteTask("A")
+            taskA.shouldHave(text("B"))
         }
     }
 }

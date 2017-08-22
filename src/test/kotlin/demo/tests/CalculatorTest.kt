@@ -5,10 +5,6 @@ import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.text
-import com.codeborne.selenide.ElementsCollection
-import com.codeborne.selenide.Selenide.`$$`
-import com.codeborne.selenide.Selenide.`$`
-import com.codeborne.selenide.SelenideElement
 import io.qameta.allure.Step
 import khttp.get
 import org.testng.annotations.BeforeClass
@@ -74,7 +70,7 @@ class CalculatorTest {
             second value 2
             select.selectOption("/")
             goBtn.click()
-            result.shouldHave(text("3"))
+            result.shouldHave(text("5"))
         }
     }
 }
@@ -103,17 +99,4 @@ class Calculator(browser: Browser) : Page(browser) {
 @Step
 infix fun KElement.value(value: Any) {
     this.setValue(value.toString())
-}
-
-fun Browser.to(url: String, block: Browser.() -> Unit) {
-    this.to(url)
-    this.block()
-}
-
-fun element(selector: String): SelenideElement {
-    return `$`(selector);
-}
-
-fun all(selector: String): ElementsCollection {
-    return `$$`(selector);
 }

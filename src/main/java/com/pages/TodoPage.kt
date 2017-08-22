@@ -18,6 +18,7 @@ class TodoPage(browser: Browser) : Page(browser) {
         get() = element("#todo-count strong")
     val taskList = all("label.ng-binding")
 
+    val tasks = all("#todo-list li label")
 
     @Step fun addTasks(vararg tasks: String) {
         for (task in tasks) {

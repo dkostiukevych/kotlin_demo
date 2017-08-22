@@ -43,6 +43,7 @@ class Login(browser: Browser) : Page(browser) {
         element("#frontloginform").setValue(name).pressEnter()
         element("#frontpasswordform").setValue(pass).pressEnter()
         element("#plusborder").click()
+
     }
 }
 

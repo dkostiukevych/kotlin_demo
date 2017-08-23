@@ -18,7 +18,7 @@ class PiggyTest {
     fun testCanAddIncome() {
         open(::Login)
                 .loginAs("qaswdefrgt", "123456")
-                .then {
+                .apply {
                     addIncome("Salary", 1000)
                     incomeItem.shouldHave(text("1 000 $ / PER MONTH"))
                 }
@@ -59,12 +59,4 @@ class MainPage(browser: Browser) : Page(browser) {
         s("#incomeslider").click()
         s(".modal-delete").click()
     }
-}
-
-fun <T : Page> Page.page(pageClass: (Browser) -> T): T {
-    return page(pageClass)
-}
-
-fun <T> T.then(block: T.() -> Unit): T {
-    return this.apply(block)
 }

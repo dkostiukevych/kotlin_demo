@@ -5,6 +5,7 @@ import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.conditions.clickable
 import com.automation.remarks.kirk.conditions.text
+import com.automation.remarks.kirk.test.example.todo.s
 import org.testng.annotations.Test
 
 
@@ -37,31 +38,31 @@ class Login(browser: Browser) : Page(browser) {
     override val url = "http://my-piggymetrics.rhcloud.com/"
 
     fun loginAs(name: String, pass: String): MainPage {
-        element("#frontloginform").setValue(name).pressEnter()
-        element("#frontpasswordform").setValue(pass).pressEnter()
-        element("#plusborder").click()
+        s("#frontloginform").setValue(name).pressEnter()
+        s("#frontpasswordform").setValue(pass).pressEnter()
+        s("#plusborder").click()
         return page(::MainPage)
     }
 }
 
 class MainPage(browser: Browser) : Page(browser) {
 
-    val incomeItem = element(".title9museo300")
+    val incomeItem = s(".title9museo300")
 
     fun addIncome(name: String, value: Int) {
-        element("#incomesplusitem").waitUntil(clickable).click()
-        element("#add-modal [name='modalvalue']").setValue(value.toString())
-        element(".modaltitle").setValue(name).pressEnter()
+        s("#incomesplusitem").waitUntil(clickable).click()
+        s("#add-modal [name='modalvalue']").setValue(value.toString())
+        s(".modaltitle").setValue(name).pressEnter()
     }
 
     fun deleteIncome() {
-        element("#incomeslider").click()
-        element(".modal-delete").click()
+        s("#incomeslider").click()
+        s(".modal-delete").click()
     }
 }
 
 fun <T : Page> Page.page(pageClass: (Browser) -> T): T {
-    return at(pageClass)
+    return page(pageClass)
 }
 
 fun <T> T.then(block: T.() -> Unit): T {

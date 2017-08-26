@@ -33,7 +33,7 @@ class TodoAngularTestWithListener {
         chrome.to(::TodoPage) {
             addTasks("A", "B", "C")
             deactivateTask("A")
-            counter.shouldHave(text("2"))
+            counter.shouldHave(text("1"))
             goToCompletedTab()
             taskList.shouldHave(exactText("A"))
         }

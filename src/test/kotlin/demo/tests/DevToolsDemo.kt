@@ -38,12 +38,11 @@ class DevTools : AbstractKirkEventListener() {
     }
 
     @Attachment(value = "Screenshot", type = "image/png")
-    fun attachScreenshot(): ByteArray {
-        try {
-            return Files.toByteArray(getLatestScreenshot())
+    private fun attachScreenshot(): ByteArray {
+        return try {
+            Files.toByteArray(getLatestScreenshot())
         } catch (e: IOException) {
-            e.printStackTrace()
-            return ByteArray(0)
+            ByteArray(0)
         }
     }
 }

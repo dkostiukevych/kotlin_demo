@@ -14,7 +14,7 @@ import org.testng.annotations.Test
  * Created by sergey on 09.07.17.
  */
 
-class TodoAngularTest {
+class TodoAngularTestWithListener {
 
     private val chrome = Browser(listener = FailListener())
 

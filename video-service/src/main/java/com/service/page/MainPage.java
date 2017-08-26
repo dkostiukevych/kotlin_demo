@@ -2,6 +2,7 @@ package com.service.page;
 
 import com.automation.remarks.kirk.Browser;
 import com.automation.remarks.kirk.KElement;
+import com.automation.remarks.kirk.KElementCollection;
 import com.automation.remarks.kirk.Page;
 
 /**
@@ -10,6 +11,9 @@ import com.automation.remarks.kirk.Page;
 public class MainPage extends Page {
 
   public KElement logo = element("a.navbar-brand");
+  public KElement usersTab = element("#users_link");
+  public KElementCollection videoFiles = all("[data-parent='#accordion'] strong");
+
 
   public MainPage(Browser browser) {
     super(browser);

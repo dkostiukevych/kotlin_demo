@@ -1,17 +1,16 @@
-package com.automation.remarks.kirk.test.example.todo
+package com.todo.page
 
 import com.automation.remarks.kirk.Browser
 import com.automation.remarks.kirk.Page
 import com.automation.remarks.kirk.core.byXpath
 import com.automation.remarks.kirk.ext.hover
-import com.automation.remarks.kirk.ext.pressEnter
 
 /**
  * Created by sergey on 09.07.17.
  */
 // tag::TodoPage[]
 class TodoPage(browser: Browser) : Page(browser) {
-    override val url = "http://todomvc.com/examples/angularjs/"
+    override val url = "/"
 
     val counter = element("#todo-count strong")
     val taskList = all("label.ng-binding")

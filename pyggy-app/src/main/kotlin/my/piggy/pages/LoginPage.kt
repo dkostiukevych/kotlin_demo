@@ -6,9 +6,9 @@ import com.automation.remarks.kirk.Page
 /**
  * Created by sepi on 26.08.17.
  */
-class Login(browser: Browser) : Page(browser) {
+class LoginPage(browser: Browser) : Page(browser) {
 
-    override val url = "http://my-piggymetrics.rhcloud.com/"
+    override val url = "/"
 
     fun loginAs(name: String, pass: String): MainPage {
         element("#frontloginform").setValue(name).pressEnter()

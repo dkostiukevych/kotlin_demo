@@ -27,4 +27,15 @@ class CalculatorTest {
             result.shouldHave(text("3"))
         }
     }
+
+    @Test
+    fun testCanSum() {
+        Kirk.open(::Calculator) {
+            first value 21
+            second value 9
+            select.selectOption("+")
+            goBtn.click()
+            result.shouldHave(text("30"))
+        }
+    }
 }

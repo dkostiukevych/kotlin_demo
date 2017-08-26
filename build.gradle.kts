@@ -5,8 +5,8 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.script.lang.kotlin.*
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.1.2"
     id("io.qameta.allure") version "2.3"
+    id("org.jetbrains.kotlin.jvm") version "1.1.2"
     java
 }
 
@@ -19,6 +19,7 @@ repositories {
         setUrl("https://jitpack.io")
     }
 }
+
 
 dependencies {
     //compile(project(":kirk"))

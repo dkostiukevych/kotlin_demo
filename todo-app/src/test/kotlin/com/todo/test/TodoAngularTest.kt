@@ -9,7 +9,8 @@ import org.testng.annotations.Test
  */
 
 class TodoAngularTest {
-    @Test fun testCanAddNewTaskAndDelete() {
+    @Test
+    fun testCanAddNewTaskAndDelete() {
         open(::TodoPage) {
             addTasks("Item0")
             taskList.should(have.size(1))

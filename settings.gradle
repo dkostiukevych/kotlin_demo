@@ -18,3 +18,5 @@ include 'services:webservice'
 rootProject.name = 'kotlin-demo'
 //include ":kirk"
 //project(":kirk").projectDir = file("../kirk-core")
+include 'todo-app'
+

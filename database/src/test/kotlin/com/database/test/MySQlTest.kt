@@ -67,7 +67,13 @@ class MySQlTest : BaseTest() {
             WHERE id = $id
         """
 
-        val cities = runner.query(query, h)
+        val city: City = runner.findOne(query)
+        println("${city.id} -> ${city.name}")
+
+        val cities: MutableList<City> = runner.findAll("""
+                        SELECT *
+                        FROM cities
+        """)
         println(cities)
     }
 
@@ -78,4 +84,13 @@ class MySQlTest : BaseTest() {
     private inline fun <reified T> rows(): BeanListHandler<T> {
         return BeanListHandler(T::class.java)
     }
+}
+
+
+inline fun <reified T> QueryRunner.findOne(sql: String): T {
+    return BeanHandler(T::class.java).run { query(sql, this) }
+}
+
+inline fun <reified T> QueryRunner.findAll(sql: String): MutableList<T> {
+    return BeanListHandler(T::class.java).run { query(sql, this) }
 }

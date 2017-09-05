@@ -3,6 +3,7 @@ package com.database.test;
 import com.database.domain.Cities
 import com.database.domain.Users
 import com.database.domain.db.utils.City
+import com.google.gson.Gson
 import org.apache.commons.dbutils.QueryRunner
 import org.apache.commons.dbutils.handlers.BeanHandler
 import org.apache.commons.dbutils.handlers.BeanListHandler
@@ -84,8 +85,21 @@ class MySQlTest : BaseTest() {
     private inline fun <reified T> rows(): BeanListHandler<T> {
         return BeanListHandler(T::class.java)
     }
+
+    @Test
+    fun name() {
+        val user = City(id = 1, name = "Kiev")
+        val json = Gson().toJson(user)
+        println(json)
+
+        val city: City = Gson().fromJson(json)
+        println(city)
+    }
 }
 
+inline fun <reified T> Gson.fromJson(json: String): T {
+    return this.fromJson(json, T::class.java)
+}
 
 inline fun <reified T> QueryRunner.findOne(sql: String): T {
     return BeanHandler(T::class.java).run { query(sql, this) }

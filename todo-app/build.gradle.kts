@@ -1,10 +1,9 @@
+
 import io.qameta.allure.gradle.AllureExtension
 import io.qameta.allure.gradle.AllurePlugin
+import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.script.lang.kotlin.apply
-import org.gradle.script.lang.kotlin.compile
-import org.gradle.script.lang.kotlin.dependencies
-import org.gradle.script.lang.kotlin.repositories
+import org.gradle.script.lang.kotlin.*
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.1.4-2"
@@ -18,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile("com.automation-remarks:kirk:0.8.3")
+    compile("com.automation-remarks:kirk:0.8.4")
     compile("org.testng:testng:6.11")
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-2")
 }

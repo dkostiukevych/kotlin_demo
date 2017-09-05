@@ -4,7 +4,6 @@ import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Kirk
 import com.automation.remarks.kirk.conditions.text
 import org.calculator.page.Calculator
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
 /**

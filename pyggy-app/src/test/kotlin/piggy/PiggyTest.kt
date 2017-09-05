@@ -1,7 +1,6 @@
 package piggy
 
 import com.automation.remarks.kirk.Browser
-import com.automation.remarks.kirk.Kirk
 import com.automation.remarks.kirk.conditions.text
 import my.piggy.pages.LoginPage
 import org.testng.annotations.Test

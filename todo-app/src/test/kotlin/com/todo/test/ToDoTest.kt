@@ -1,5 +1,6 @@
 package com.todo.test
 
+import com.automation.remarks.kirk.KElement
 import com.automation.remarks.kirk.Kirk.Companion.open
 import com.automation.remarks.kirk.conditions.exactText
 import com.automation.remarks.kirk.conditions.size
@@ -27,9 +28,13 @@ class ToDoTest {
         open(::TodoPage) {
             addTasks("A", "B", "C")
             deactivateTask("A")
-            counter.shouldHave(text("2"))
+            counter shouldHaveValue 2
             goToCompletedTab()
             taskList.shouldHave(exactText("A"))
         }
     }
+}
+
+infix fun KElement.shouldHaveValue(value:Any){
+    this.shouldHave(com.automation.remarks.kirk.conditions.text(value.toString()))
 }

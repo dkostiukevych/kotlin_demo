@@ -7,7 +7,7 @@ import org.gradle.script.lang.kotlin.*
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.1.4-2"
-    id("io.qameta.allure") version "2.3"
+    id("io.qameta.allure") version "2.4"
 }
 
 apply<AllurePlugin>()
@@ -33,5 +33,5 @@ test.useTestNG()
 
 val allure: AllureExtension by extensions
 allure.autoconfigure = true
-allure.version = "2.1.1"
+allure.version = "2.3.5"
 allure.configuration = "compile"

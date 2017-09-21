@@ -25,6 +25,8 @@ class MySQlTest : BaseTest() {
                 driver = "org.postgresql.Driver",
                 user = postgre.getUsername(),
                 password = postgre.getPassword())
+
+
         transaction {
             create(Cities, Users)
 
@@ -49,33 +51,12 @@ class MySQlTest : BaseTest() {
         println("Hello")
 
 
-        val dataSource = PGSimpleDataSource()
-        dataSource.user = "test"
-        dataSource.password = "test"
-        dataSource.url = postgre.getJdbcUrl()
 
-
-        val runner = QueryRunner(dataSource)
         //val h = BeanHandler<com.database.domain.db.utils.Cities>(com.database.domain.db.utils.Cities::class.java)
 
         val h: BeanListHandler<City> = rows()
 
-        val id = 2
 
-        val query = """
-            SELECT *
-            FROM cities
-            WHERE id = $id
-        """
-
-        val city: City = runner.findOne(query)
-        println("${city.id} -> ${city.name}")
-
-        val cities: MutableList<City> = runner.findAll("""
-                        SELECT *
-                        FROM cities
-        """)
-        println(cities)
     }
 
     private inline fun <reified T> row(): BeanHandler<T> {
@@ -86,21 +67,21 @@ class MySQlTest : BaseTest() {
         return BeanListHandler(T::class.java)
     }
 
-    @Test
-    fun name() {
-        val user = City(id = 1, name = "Kiev")
-        val json = Gson().toJson(user)
-        println(json)
-
-        val city: City = Gson().fromJson(json)
-        println(city)
-    }
+//    @Test
+//    fun name() {
+//        val user = City(id = 1, name = "Kiev")
+//        val json = Gson().toJson(user)
+//        println(json)
+//
+//        val city: City = Gson().fromJson(json)
+//        println(city)
+//    }
 }
 
-inline fun <reified T> Gson.fromJson(json: String): T {
-    return this.fromJson(json, T::class.java)
-}
-
+//inline fun <reified T> Gson.fromJson(json: String): T {
+//    return this.fromJson(json, T::class.java)
+//}
+//
 inline fun <reified T> QueryRunner.findOne(sql: String): T {
     return BeanHandler(T::class.java).run { query(sql, this) }
 }

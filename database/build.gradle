@@ -22,6 +22,9 @@ repositories {
         maven {
             url  "https://dl.bintray.com/kotlin/exposed"
         }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 }
 
@@ -34,7 +37,7 @@ dependencies {
     compile group: 'org.testcontainers', name: 'postgresql', version: '1.4.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
-
+    testCompile 'me.tatarka.assertk:assertk:1.0-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 

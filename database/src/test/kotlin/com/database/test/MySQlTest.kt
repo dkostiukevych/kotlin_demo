@@ -3,7 +3,6 @@ package com.database.test;
 import com.database.domain.Cities
 import com.database.domain.Users
 import com.database.domain.db.utils.City
-import com.google.gson.Gson
 import org.apache.commons.dbutils.QueryRunner
 import org.apache.commons.dbutils.handlers.BeanHandler
 import org.apache.commons.dbutils.handlers.BeanListHandler
@@ -13,7 +12,6 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.Test
-import org.postgresql.ds.PGSimpleDataSource
 
 
 class MySQlTest : BaseTest() {
@@ -51,37 +49,22 @@ class MySQlTest : BaseTest() {
         println("Hello")
 
 
-
         //val h = BeanHandler<com.database.domain.db.utils.Cities>(com.database.domain.db.utils.Cities::class.java)
 
-        val h: BeanListHandler<City> = rows()
-
-
     }
 
-    private inline fun <reified T> row(): BeanHandler<T> {
-        return BeanHandler(T::class.java)
-    }
+    @Test
+    fun catSelect() {
 
-    private inline fun <reified T> rows(): BeanListHandler<T> {
-        return BeanListHandler(T::class.java)
-    }
+        val beanHandler = BeanHandler<City>(City::class.java)
+        val city: City = QueryRunner().query("SELECT * FROM city", beanHandler)
 
-//    @Test
-//    fun name() {
-//        val user = City(id = 1, name = "Kiev")
-//        val json = Gson().toJson(user)
-//        println(json)
-//
-//        val city: City = Gson().fromJson(json)
-//        println(city)
-//    }
+
+        val city2: City = QueryRunner().findOne("SELECT * FROM city")
+
+    }
 }
 
-//inline fun <reified T> Gson.fromJson(json: String): T {
-//    return this.fromJson(json, T::class.java)
-//}
-//
 inline fun <reified T> QueryRunner.findOne(sql: String): T {
     return BeanHandler(T::class.java).run { query(sql, this) }
 }

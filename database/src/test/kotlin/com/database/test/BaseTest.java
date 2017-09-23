@@ -20,4 +20,12 @@ public class BaseTest {
 
     return new QueryRunner(dataSource);
   }
+
+//  private inline fun <reified T> row(): BeanHandler<T> {
+//    return BeanHandler(T::class.java)
+//  }
+//
+//  private inline fun <reified T> rows(): BeanListHandler<T> {
+//    return BeanListHandler(T::class.java)
+//  }
 }

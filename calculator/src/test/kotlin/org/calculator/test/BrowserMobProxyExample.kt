@@ -2,7 +2,9 @@ package org.calculator.test
 
 import com.automation.remarks.kirk.Browser
 import com.automation.remarks.kirk.conditions.text
+import com.google.common.io.Files
 import io.github.bonigarcia.wdm.ChromeDriverManager
+import io.qameta.allure.Attachment
 import net.lightbody.bmp.BrowserMobProxyServer
 import net.lightbody.bmp.client.ClientUtil
 import net.lightbody.bmp.proxy.CaptureType
@@ -13,9 +15,11 @@ import org.openqa.selenium.remote.DesiredCapabilities
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import net.lightbody.bmp.core.har.Har
+import org.testng.annotations.Listeners
 import java.io.File
+import java.io.IOException
 
-
+@Listeners(HarListener::class)
 class BrowserMobProxyExample {
 
 
@@ -24,6 +28,10 @@ class BrowserMobProxyExample {
         ChromeDriverManager.getInstance().setup()
         val proxy = BrowserMobProxyServer()
         proxy.start(0)
+        proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT)
+        // create a new HAR with the label "yahoo.com"
+        proxy.newHar("yahoo.com")
+
 
         // get the Selenium proxy object
         val seleniumProxy = ClientUtil.createSeleniumProxy(proxy)
@@ -34,10 +42,6 @@ class BrowserMobProxyExample {
         // start the browser up
         val driver = ChromeDriver(capabilities)
 
-        proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT)
-
-        // create a new HAR with the label "yahoo.com"
-        proxy.newHar("yahoo.com")
 
         val browser = Browser(driver).apply {
             to(::Calculator) {
@@ -56,5 +60,16 @@ class BrowserMobProxyExample {
         proxy.stop()
         browser.quit()
 
+        attachHar()
     }
+
+    @Attachment(fileExtension = ".har", value = "harFile",type = "application/json")
+    private fun attachHar(): ByteArray {
+        return try {
+            Files.toByteArray(File("/home/sergey/Github/kotlin_demo/calculator/harFile.har"))
+        } catch (e: IOException) {
+            ByteArray(0)
+        }
+    }
+
 }

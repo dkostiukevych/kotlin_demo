@@ -2,6 +2,8 @@ package org.calculator.test
 
 import com.automation.remarks.kirk.AbstractKirkEventListener
 import com.automation.remarks.kirk.Browser
+import com.automation.remarks.kirk.Kirk.Companion.drive
+import com.automation.remarks.kirk.KirkEventListener
 import com.automation.remarks.kirk.conditions.text
 import com.automation.remarks.kirk.core.Select
 import org.calculator.page.Calculator
@@ -15,13 +17,14 @@ class DevToolsDemo {
 
     @Test
     fun testCanAddTwoNumbersListener() {
-        val chrome = Browser(listener = DevTools())
-        chrome.to(::Calculator) {
-            first value 1
-            second value 2
-            select option "+"
-            goBtn.click()
-            result shouldHave text("4")
+        drive{
+            to(::Calculator) {
+                first value 1
+                second value 2
+                select option "+"
+                goBtn.click()
+                result shouldHave text("4")
+            }
         }
     }
 }

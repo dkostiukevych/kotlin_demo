@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HAR Viewer Test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://gitgrimbo.github.io/harviewer/master/scripts/jquery.js"></script>
+    <link rel="stylesheet" href="https://gitgrimbo.github.io/harviewer/master/css/harViewer.css" type="text/css">
+</head>
+<body class="harBody">
+<div id="content"></div>
+<script data-main="https://gitgrimbo.github.io/harviewer/master/scripts/harViewer.js" src="https://gitgrimbo.github.io/harviewer/master/scripts/require.js"></script>
+<script>
+    $("#content").bind("onViewerPreInit", function(event)
+    {
+        // Get application object
+        var viewer = event.target.repObject;
+        // Remove unnecessary tabs
+    <!--viewer.removeTab("Home");-->
+    <!--viewer.removeTab("DOM");-->
+    <!--viewer.removeTab("About");-->
+    <!--viewer.removeTab("Schema");-->
+
+    // Hide the tab bar
+    viewer.showTabBar(false);
+    viewer.loadHar('/home/sergey/Github/kotlin_demo/calculator/harFile.har');
+    });
+    </script>
+
+</body>
+</html>

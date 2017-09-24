@@ -8,8 +8,11 @@ import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.script.lang.kotlin.*
 
+val kirkVersion by project
+val testNgVersion by project
+
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.1.50"
+    kotlin("jvm")
     id("io.qameta.allure") version "2.4"
 }
 
@@ -20,9 +23,9 @@ repositories {
 }
 
 dependencies {
-    compile("com.automation-remarks:kirk:0.8.4")
-    compile("org.testng:testng:6.11")
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-2")
+    compile("com.automation-remarks:kirk:$kirkVersion")
+    compile("org.testng:testng:$testNgVersion")
+    compile(kotlin("stdlib-jre8"))
 }
 
 val test: Test by tasks

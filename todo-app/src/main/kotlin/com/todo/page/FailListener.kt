@@ -4,12 +4,17 @@ import com.automation.remarks.kirk.AbstractKirkEventListener
 import com.automation.remarks.kirk.core.getLatestScreenshot
 import com.google.common.io.Files
 import io.qameta.allure.Attachment
+import org.openqa.selenium.WebDriver
 import java.io.IOException
 
 /**
  * Created by sepi on 26.08.17.
  */
 class FailListener : AbstractKirkEventListener() {
+    override fun beforeNavigation(url: String, driver: WebDriver) {
+        print("Navigate to $url")
+    }
+
     override fun onFail(exception: Exception) {
         attachScreenshot()
     }

@@ -19,6 +19,7 @@ plugins {
 apply<AllurePlugin>()
 
 repositories {
+    mavenLocal()
     jcenter()
 }
 

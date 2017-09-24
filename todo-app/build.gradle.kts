@@ -31,14 +31,18 @@ dependencies {
 val test: Test by tasks
 
 test.testLogging {
-    exceptionFormat = TestExceptionFormat.FULL
+    exceptionFormat = TestExceptionFormat.SHORT
 }
 
 test.useTestNG()
 test.ignoreFailures = true
+test.useTestNG()
+test.finalizedBy("allureReport")
+
 
 val allure: AllureExtension by extensions
 allure.autoconfigure = true
 allure.version = "2.3.5"
 allure.configuration = "compile"
+
 

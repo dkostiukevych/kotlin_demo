@@ -10,6 +10,16 @@ import java.io.IOException
 /**
  * Created by sepi on 26.08.17.
  */
+
+@Attachment(value = "Screenshot", type = "image/png")
+fun attachScreenshot(): ByteArray {
+    return try {
+        Files.toByteArray(getLatestScreenshot())
+    } catch (e: IOException) {
+        ByteArray(0)
+    }
+}
+
 class FailListener : AbstractKirkEventListener() {
     override fun beforeNavigation(url: String, driver: WebDriver) {
         print("Navigate to $url")
@@ -17,14 +27,5 @@ class FailListener : AbstractKirkEventListener() {
 
     override fun onFail(exception: Exception) {
         attachScreenshot()
-    }
-
-    @Attachment(value = "Screenshot", type = "image/png")
-    private fun attachScreenshot(): ByteArray {
-        return try {
-            Files.toByteArray(getLatestScreenshot())
-        } catch (e: IOException) {
-            ByteArray(0)
-        }
     }
 }

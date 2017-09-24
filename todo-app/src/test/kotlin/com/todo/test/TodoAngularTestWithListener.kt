@@ -8,22 +8,22 @@ import com.automation.remarks.kirk.conditions.exactText
 import com.automation.remarks.kirk.conditions.size
 import com.automation.remarks.kirk.conditions.text
 import com.todo.page.FailListener
+import com.todo.page.TestListener
 import com.todo.page.TodoPage
 import org.testng.annotations.AfterClass
 import org.testng.annotations.AfterMethod
+import org.testng.annotations.Listeners
 import org.testng.annotations.Test
 
 /**
  * Created by sergey on 09.07.17.
  */
-
+@Listeners(TestListener::class)
 class TodoAngularTestWithListener {
-
-    private val chrome = Browser(listener = FailListener())
 
     @Test
     fun testCanAddNewTaskAndDelete() {
-        chrome.to(::TodoPage) {
+        open(::TodoPage) {
             addTasks("Item0")
             taskList.shouldHave(size(1))
             deleteTask("Item0")
@@ -33,7 +33,7 @@ class TodoAngularTestWithListener {
 
     @Test
     fun testCanDeactivateTask() {
-        chrome.to(::TodoPage) {
+        open(::TodoPage) {
             addTasks("A", "B", "C")
             deactivateTask("A")
             counter.shouldHave(text("1"))

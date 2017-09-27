@@ -63,7 +63,7 @@ class BrowserMobProxyExample {
         attachHar()
     }
 
-    @Attachment(fileExtension = ".har", value = "harFile",type = "application/json")
+    @Attachment(fileExtension = ".har", value = "harFile.har",type = "application/json")
     private fun attachHar(): ByteArray {
         return try {
             Files.toByteArray(File("/home/sergey/Github/kotlin_demo/calculator/harFile.har"))

@@ -13,6 +13,11 @@ inline fun <reified T> QueryRunner.findAll(sql: String): MutableList<T> {
     return BeanListHandler(T::class.java).run { query(sql, this) }
 }
 
+inline fun <reified T> QueryRunner.findAll(): MutableList<T> {
+    return BeanListHandler(T::class.java).run { query("Select * FROM ${T::class.simpleName}", this) }
+}
+
+
 fun QueryRunner.query(sql: String): List<Map<String, Any?>>? {
 
     val resultSetHandler = ResultSetHandler<List<Map<String, Any?>>> { rs ->

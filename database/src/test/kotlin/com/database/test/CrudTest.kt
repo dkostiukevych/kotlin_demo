@@ -1,5 +1,6 @@
 package com.database.test
 
+import com.database.domain.findAll
 import com.database.domain.query
 import net.oddpoet.expect.extension.haveSizeOf
 import net.oddpoet.expect.should
@@ -42,5 +43,13 @@ class CrudTest :BaseTest() {
 
         db.query("SELECT * FROM customers", resultSetHandler).should.haveSizeOf(2)
         db.query("SELECT * FROM customers").should.haveSizeOf(2)
+
+
+        val list = db.findAll<Customers>().first { it.customer_name != "Dima" }
+
+        print(list)
     }
 }
+
+data class Customers(var customer_id: Long? = null,
+                     var customer_name: String? = null)

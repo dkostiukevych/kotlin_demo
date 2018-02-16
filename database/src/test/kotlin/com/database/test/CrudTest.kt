@@ -1,11 +1,12 @@
 package com.database.test
 
+
+import com.database.domain.Table
 import com.database.domain.findAll
 import com.database.domain.query
 import net.oddpoet.expect.extension.haveSizeOf
 import net.oddpoet.expect.should
 import org.apache.commons.dbutils.ResultSetHandler
-
 import org.junit.Test
 
 class CrudTest :BaseTest() {
@@ -45,11 +46,20 @@ class CrudTest :BaseTest() {
         db.query("SELECT * FROM customers").should.haveSizeOf(2)
 
 
-        val list = db.findAll<Customers>().first { it.customer_name != "Dima" }
+        val list = db.findAll<Customers>()
 
         print(list)
     }
 }
 
-data class Customers(var customer_id: Long? = null,
-                     var customer_name: String? = null)
+
+
+
+data class Customers(var customerId:Long? = null,
+                     var customerName:String? = null) : Table(){
+
+    override val mapping = mapOf(
+            "customer_id" to "customerId",
+            "customer_name" to "customerName"
+    )
+}

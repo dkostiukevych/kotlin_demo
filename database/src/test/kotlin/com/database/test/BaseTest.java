@@ -1,5 +1,6 @@
 package com.database.test;
 
+import kotlin.jvm.JvmStatic;
 import org.apache.commons.dbutils.QueryRunner;
 import org.junit.ClassRule;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -20,12 +21,4 @@ public class BaseTest {
 
     return new QueryRunner(dataSource);
   }
-
-//  private inline fun <reified T> row(): BeanHandler<T> {
-//    return BeanHandler(T::class.java)
-//  }
-//
-//  private inline fun <reified T> rows(): BeanListHandler<T> {
-//    return BeanListHandler(T::class.java)
-//  }
 }

@@ -36,7 +36,8 @@ test.testLogging {
 
 test.useTestNG()
 test.ignoreFailures = true
-test.useTestNG()
+
+
 test.finalizedBy("allureReport")
 
 

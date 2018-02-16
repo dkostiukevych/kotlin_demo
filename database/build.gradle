@@ -31,7 +31,7 @@ repositories {
 dependencies {
     compile 'org.jetbrains.exposed:exposed:0.8.5'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-
+    testCompile("net.oddpoet:kotlin-expect:0.8.4")
     compile group: 'org.testcontainers', name: 'testcontainers', version: '1.4.2'
     compile group: 'org.testcontainers', name: 'mysql', version: '1.4.2'
     compile group: 'org.testcontainers', name: 'postgresql', version: '1.4.2'

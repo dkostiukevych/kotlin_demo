@@ -3,6 +3,8 @@ package com.database.test
 import com.database.domain.Cities
 import com.database.domain.Users
 import com.database.domain.db.utils.City
+import com.database.domain.findAll
+import com.database.domain.findOne
 import me.tatarka.assertk.assertions.hasSize
 import me.tatarka.assertk.assertions.isEqualTo
 import org.apache.commons.dbutils.QueryRunner
